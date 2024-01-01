@@ -3,5 +3,4 @@ Made by: Abdulla Jamal
 Last modified:
 --------------------------------------
 
-A website made for searching information about the searched movie or actor.
-with the help of The Movie DataBase API.
+A website made to display informaion about movies or actors with the help of The Movie DataBase API.
