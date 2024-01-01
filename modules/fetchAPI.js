@@ -2,6 +2,7 @@
 export async function fetchMovieDB(input, type) {
     const apiKey = '2458552afaedac046eaf59b5f10b357d';
     const apiBaseUrl = `https://api.themoviedb.org/3/search/${type}?query=${input}&include_adult=false&language=en-US&page=1&api_key=`
+
     const url = apiBaseUrl + apiKey;
 
     const response = await fetch(url)
@@ -10,17 +11,18 @@ export async function fetchMovieDB(input, type) {
         if (_.isEmpty(data.results)) {
             throw 'input error'
         }
-        for (const value of data.results) {
-            const id = value.id;
-            const basedetailsURL = `https://api.themoviedb.org/3/${type}/${id}?language=en-US&api_key=`
-            const detailsURL = basedetailsURL + apiKey;
-            const res = await fetch(detailsURL)
-            if (res.ok) {
-                const detailsData = await res.json()
-                console.log(detailsData);
-            }
-            else throw 'error'
-        }
+        /*Här kan jag nå id och fetcha infon som jag vill ha men jag kan inte returnera infon för senare använding */
+        // for (const value of data.results) {
+        //     const id = value.id;
+        //     const basedetailsURL = `https://api.themoviedb.org/3/${type}/${id}?language=en-US&api_key=`
+        //     const detailsURL = basedetailsURL + apiKey;
+        //     const res = await fetch(detailsURL)
+        //     if (res.ok) {
+        //         const detailsData = await res.json()
+        //         console.log(detailsData);
+        //     }
+        //     else throw 'error'
+        // }
         return data;
 
     }

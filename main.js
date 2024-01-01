@@ -19,7 +19,7 @@
  * 
  * 
  * 
- * - Links used as help to building this website are listed below.
+ * - Links used as help for building this website are listed below.
  * https://devdevout.com/css/css-cards
  * https://www.freepik.com/free-vector
  * https://getcssscan.com/css-buttons-examples

@@ -10,22 +10,25 @@ export function createAndAppendElement(element, content, container) {
   if (el.src === 'https://image.tmdb.org/t/p/w300null') {
     el.src = 'https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg'
   }
-
   return el;
 }
 
 export function displayResultsMovie(fetchdata) {
   for (const movie of fetchdata.results) {
     const movieResultDiv = document.createElement('div')
+    const detailsDiv = document.createElement('div')
     movieResultDiv.classList.add('card-style')
     createAndAppendElement('h1', movie.title, movieResultDiv)
     createAndAppendElement('h2', `Release date: ${movie.release_date}`, movieResultDiv)
     createAndAppendElement('p', `Overview: ${movie.overview}`, movieResultDiv)
     createAndAppendElement('img', `https://image.tmdb.org/t/p/w300${movie.poster_path}`, movieResultDiv)
-    createAndAppendElement('button', 'Details', movieResultDiv)
+    createAndAppendElement('button', `${movie.id}`, movieResultDiv) /*Här kan jag nå id också */
+    movieResultDiv.append(detailsDiv)
     mainResultContainer.append(movieResultDiv)
   }
 }
+
+
 export function displayResultsPerson(fetchdata) {
   for (const actor of fetchdata.results) {
     const actorResultDiv = document.createElement('div')
@@ -47,10 +50,6 @@ export function displayResultsPerson(fetchdata) {
     mainResultContainer.append(actorResultDiv)
   }
 }
-export function displayDetails(fetchdata) {
-
-}
-
 export function removePrevSearchResult() {
   const mainResultContainer = document.querySelector('#result-container');
   mainResultContainer.innerHTML = '';
