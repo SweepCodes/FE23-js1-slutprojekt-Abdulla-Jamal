@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./main.js" type="module" defer></script>
+    <script
+      src=" https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js "
+      defer
+    ></script>
+    <title>TMDB API</title>
+  </head>
+  <body>
+    <div id="main-container">
+      <form>
+        <div>
+          <input
+            type="text"
+            name="input"
+            id="input"
+            placeholder="movie search"
+          />
+        </div>
+
+        <div id="movie-radio">
+          <input
+            type="radio"
+            name="name"
+            id="movie-choice"
+            value="movie"
+            checked
+          />
+          <label for="movie-choice">Movie</label>
+        </div>
+        <div id="actor-div">
+          <input type="radio" name="name" id="actor-choice" value="person" />
+          <label for="actor-choice">Actor</label>
+        </div>
+
+        <div>
+          <button id="search-btn">Search</button>
+        </div>
+      </form>
+      <div id="list-div">
+        <h2 class="list-el">Top Rated</h2>
+        <h2 class="list-el">Popular</h2>
+      </div>
+    </div>
+    <div id="result-container"></div>
+    <div id="error-container" class="hidden">
+      <h2 id="error-msg"></h2>
+    </div>
+  </body>
+</html>
