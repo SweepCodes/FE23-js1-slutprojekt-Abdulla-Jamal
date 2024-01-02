@@ -10,6 +10,13 @@ export function createAndAppendElement(element, content, container) {
   if (el.src === 'https://image.tmdb.org/t/p/w300null') {
     el.src = 'https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg'
   }
+  /*Här om jag klickar på en knapp så  klickas alla knappar i divven*/
+  if (element === 'button') {
+    addEventListener('click', () => {
+      console.log('hello');
+    })
+
+  }
   return el;
 }
 
