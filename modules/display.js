@@ -1,5 +1,4 @@
 const mainResultContainer = document.querySelector('#result-container');
-
 export function createAndAppendElement(element, content, container) {
   const el = document.createElement(element)
   container.append(el)
@@ -10,14 +9,47 @@ export function createAndAppendElement(element, content, container) {
   if (el.src === 'https://image.tmdb.org/t/p/w300null') {
     el.src = 'https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg'
   }
-  /*Här om jag klickar på en knapp så  klickas alla knappar i divven*/
+
   if (element === 'button') {
-    addEventListener('click', () => {
-      console.log('hello');
+    const searchType = document.querySelector('input[type="radio"]:checked').value;
+    el.innerText = 'Details'
+    el.addEventListener('click', () => {
+      let id = content;
+      if (searchType === 'movie') {
+        removePrevSearchResult();
+        movieDetailsFetch(searchType, id)
+      }
+      else if (searchType === 'person') {
+
+      }
     })
 
   }
   return el;
+}
+
+
+
+function movieDetailsFetch(type, id) {
+  const apiKey = '2458552afaedac046eaf59b5f10b357d';
+  const basedetailsURL = `https://api.themoviedb.org/3/${type}/${id}?language=en-US&api_key=`
+  const detailsURL = basedetailsURL + apiKey;
+  fetch(detailsURL).then((res => {
+    if (res.ok) {
+      return res.json();
+    }
+    else throw 'error'
+  })).then(movie => {
+    displayDetailsMovies(movie);
+  }).catch()
+}
+function personDetailsFetch(type, id) {
+  const apiKey = '2458552afaedac046eaf59b5f10b357d';
+  const basedetailsURL = `https://api.themoviedb.org/3/${type}/${id}?language=en-US&api_key=`
+  const detailsURL = basedetailsURL + apiKey;
+  fetch(detailsURL).then(movie => {
+    displayDetailsMovies(movie);
+  }).then().catch
 }
 
 export function displayResultsMovie(fetchdata) {
@@ -29,7 +61,7 @@ export function displayResultsMovie(fetchdata) {
     createAndAppendElement('h2', `Release date: ${movie.release_date}`, movieResultDiv)
     createAndAppendElement('p', `Overview: ${movie.overview}`, movieResultDiv)
     createAndAppendElement('img', `https://image.tmdb.org/t/p/w300${movie.poster_path}`, movieResultDiv)
-    createAndAppendElement('button', `${movie.id}`, movieResultDiv) /*Här kan jag nå id också */
+    createAndAppendElement('button', `${movie.id}`, movieResultDiv)
     movieResultDiv.append(detailsDiv)
     mainResultContainer.append(movieResultDiv)
   }
@@ -55,6 +87,38 @@ export function displayResultsPerson(fetchdata) {
     actorResultDiv.append(actorWorkList)
     createAndAppendElement('button', 'Details', actorResultDiv)
     mainResultContainer.append(actorResultDiv)
+  }
+}
+
+export function displayDetailsMovies(movie) {
+  const detailsDiv = document.createElement('div')
+  const genreList = document.createElement('ul')
+  const companiesList = document.createElement('ul')
+  detailsDiv.classList.add('movie-details')
+  createAndAppendElement('h1', `${movie.title}`, detailsDiv)
+  createAndAppendElement('p', `Budget: ${movie.budget}`, detailsDiv)
+  createAndAppendElement('p', `Revenue: ${movie.revenue}`, detailsDiv)
+  createAndAppendElement('p', `Runtime: ${movie.runtime}`, detailsDiv)
+  createAndAppendElement('h2', 'Genres:', detailsDiv)
+  detailsDiv.append(genreList)
+  for (const value of movie.genres) {
+    createAndAppendElement('li', `${value.name}`, genreList)
+  }
+  createAndAppendElement('h3', 'Produced by:', detailsDiv)
+  for (const value of movie.production_companies) {
+    createAndAppendElement('li', value.name, companiesList)
+  }
+  detailsDiv.append(companiesList)
+  mainResultContainer.append(detailsDiv)
+}
+export function displayDetailsPerson(fetchdata) {
+  for (const id of fetchdata) {
+    const detailsDiv = document.createElement('div')
+    detailsDiv.classList.add('actor-details')
+    createAndAppendElement('h1', `${id.name}`, detailsDiv)
+    createAndAppendElement('h2', `Bio: ${id.birthday}`, detailsDiv)
+    createAndAppendElement('p', `Bio: ${id.biography}`, detailsDiv)
+
   }
 }
 export function removePrevSearchResult() {

@@ -11,23 +11,9 @@ export async function fetchMovieDB(input, type) {
         if (_.isEmpty(data.results)) {
             throw 'input error'
         }
-        /*Här kan jag nå id och fetcha infon som jag vill ha men jag kan inte returnera infon för senare använding */
-        // for (const value of data.results) {
-        //     const id = value.id;
-        //     const basedetailsURL = `https://api.themoviedb.org/3/${type}/${id}?language=en-US&api_key=`
-        //     const detailsURL = basedetailsURL + apiKey;
-        //     const res = await fetch(detailsURL)
-        //     if (res.ok) {
-        //         const detailsData = await res.json()
-        //         console.log(detailsData);
-        //     }
-        //     else throw 'error'
-        // }
         return data;
-
     }
     else throw 'error';
-
 };
 
 export async function movieListFetch(list) {
@@ -42,7 +28,6 @@ export async function movieListFetch(list) {
     }
     else throw 'error';
 }
-
 export function displayErrorMsg(error) {
     console.log(error);
     let msg;

@@ -53,6 +53,8 @@ async function searchHandler(event) {
 }
 
 
+
+
 listEls.forEach((element) => {
     element.addEventListener('click', () => {
         if (element.textContent === 'Top Rated') {
