@@ -17,10 +17,11 @@ export function createAndAppendElement(element, content, container) {
       let id = content;
       if (searchType === 'movie') {
         removePrevSearchResult();
-        movieDetailsFetch(searchType, id)
+        movieDetailsFetch(searchType, id, displayDetailsMovies)
       }
       else if (searchType === 'person') {
-
+        removePrevSearchResult();
+        movieDetailsFetch(searchType, id, displayDetailsMovies)
       }
     })
 
@@ -29,28 +30,25 @@ export function createAndAppendElement(element, content, container) {
 }
 
 
+function movieDetailsFetch(type, id, displayFunction) {
+  const apiKey = '2458552afaedac046eaf59b5f10b357d';
+  const basedetailsURL = `https://api.themoviedb.org/3/${type}/${id}?language=en-US&api_key=`;
+  const detailsURL = basedetailsURL + apiKey;
 
-function movieDetailsFetch(type, id) {
-  const apiKey = '2458552afaedac046eaf59b5f10b357d';
-  const basedetailsURL = `https://api.themoviedb.org/3/${type}/${id}?language=en-US&api_key=`
-  const detailsURL = basedetailsURL + apiKey;
-  fetch(detailsURL).then((res => {
-    if (res.ok) {
-      return res.json();
-    }
-    else throw 'error'
-  })).then(movie => {
-    displayDetailsMovies(movie);
-  }).catch()
+  fetch(detailsURL)
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw 'error';
+      }
+    })
+    .then(data => {
+      displayFunction(data);
+    })
+    .catch(displayErrorMsg);
 }
-function personDetailsFetch(type, id) {
-  const apiKey = '2458552afaedac046eaf59b5f10b357d';
-  const basedetailsURL = `https://api.themoviedb.org/3/${type}/${id}?language=en-US&api_key=`
-  const detailsURL = basedetailsURL + apiKey;
-  fetch(detailsURL).then(movie => {
-    displayDetailsMovies(movie);
-  }).then().catch
-}
+
 
 export function displayResultsMovie(fetchdata) {
   for (const movie of fetchdata.results) {
@@ -111,15 +109,13 @@ export function displayDetailsMovies(movie) {
   detailsDiv.append(companiesList)
   mainResultContainer.append(detailsDiv)
 }
-export function displayDetailsPerson(fetchdata) {
-  for (const id of fetchdata) {
-    const detailsDiv = document.createElement('div')
-    detailsDiv.classList.add('actor-details')
-    createAndAppendElement('h1', `${id.name}`, detailsDiv)
-    createAndAppendElement('h2', `Bio: ${id.birthday}`, detailsDiv)
-    createAndAppendElement('p', `Bio: ${id.biography}`, detailsDiv)
-
-  }
+export function displayDetailsPerson(person) {
+  const detailsDiv = document.createElement('div')
+  detailsDiv.classList.add('actor-details')
+  createAndAppendElement('h1', `${person.name}`, detailsDiv)
+  createAndAppendElement('h2', `Bio: ${person.birthday}`, detailsDiv)
+  createAndAppendElement('p', `Bio: ${person.biography}`, detailsDiv)
+  mainResultContainer.append(detailsDiv)
 }
 export function removePrevSearchResult() {
   const mainResultContainer = document.querySelector('#result-container');
@@ -127,6 +123,19 @@ export function removePrevSearchResult() {
 
   const errorContainer = document.querySelector('#error-container');
   errorContainer.classList.add('hidden');
+}
+
+function displayErrorMsg(error) {
+  console.log(error);
+  let msg;
+  if (error === 'input error') msg = 'no results'
+  else msg = 'something went wrong... please try again later'
+
+  const errorMsgEl = document.querySelector('#error-msg')
+  errorMsgEl.innerText = msg;
+
+  const errorContainer = document.querySelector('#error-container')
+  errorContainer.classList.remove('hidden')
 }
 
 

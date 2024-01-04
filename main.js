@@ -27,12 +27,12 @@
  */
 
 
-import { fetchMovieDB } from "./modules/fetchAPI.js";
-import { displayResultsMovie } from "./modules/display.js";
-import { displayResultsPerson } from "./modules/display.js";
-import { displayErrorMsg } from "./modules/fetchAPI.js";
-import { movieListFetch } from "./modules/fetchAPI.js";
-import { removePrevSearchResult } from "./modules/display.js";
+import { fetchMovieDB } from "./modules/fetches.js";
+import { displayResultsMovie } from "./modules/functionality.js";
+import { displayResultsPerson } from "./modules/functionality.js";
+import { displayErrorMsg } from "./modules/fetches.js";
+import { movieListFetch } from "./modules/fetches.js";
+import { removePrevSearchResult } from "./modules/functionality.js";
 const form = document.querySelector('form');
 const listEls = document.querySelectorAll('.list-el')
 
