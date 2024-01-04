@@ -11,6 +11,9 @@ body {
 .hidden {
   visibility: hidden;
 }
+.extra-hidden {
+  display: none;
+}
 #list-div {
   display: flex;
   width: 30%;
@@ -231,4 +234,31 @@ form {
 
 .material-symbols-outlined {
   vertical-align: middle;
+}
+
+.movie-details-style {
+  border: 2px solid black;
+  padding: 5px;
+  border-radius: 15px;
+
+  img {
+    border-radius: 15px;
+    width: fit-content;
+  }
+  ul {
+    list-style: none;
+  }
+}
+.actor-details-style {
+  border: 2px solid black;
+  padding: 5px;
+  border-radius: 15px;
+
+  img {
+    border-radius: 15px;
+    width: fit-content;
+  }
+  ul {
+    list-style: none;
+  }
 }

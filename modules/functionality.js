@@ -8,6 +8,7 @@ export function createAndAppendElement(element, content, container) {
 
   if (el.src === 'https://image.tmdb.org/t/p/w300null') {
     el.src = 'https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg'
+
   }
 
   if (element === 'button') {
@@ -17,20 +18,19 @@ export function createAndAppendElement(element, content, container) {
       let id = content;
       if (searchType === 'movie') {
         removePrevSearchResult();
-        movieDetailsFetch(searchType, id, displayDetailsMovies)
+        DetailsFetch(searchType, id, displayDetailsMovies)
       }
       else if (searchType === 'person') {
         removePrevSearchResult();
-        movieDetailsFetch(searchType, id, displayDetailsMovies)
+        DetailsFetch(searchType, id, displayDetailsPerson)
       }
     })
-
   }
   return el;
 }
 
 
-function movieDetailsFetch(type, id, displayFunction) {
+function DetailsFetch(type, id, displayFunction) {
   const apiKey = '2458552afaedac046eaf59b5f10b357d';
   const basedetailsURL = `https://api.themoviedb.org/3/${type}/${id}?language=en-US&api_key=`;
   const detailsURL = basedetailsURL + apiKey;
@@ -59,6 +59,9 @@ export function displayResultsMovie(fetchdata) {
     createAndAppendElement('h2', `Release date: ${movie.release_date}`, movieResultDiv)
     createAndAppendElement('p', `Overview: ${movie.overview}`, movieResultDiv)
     createAndAppendElement('img', `https://image.tmdb.org/t/p/w300${movie.poster_path}`, movieResultDiv)
+    if (_.isNull(movie.poster_path)) {
+      movieResultDiv.classList.add('extra-hidden')
+    }
     createAndAppendElement('button', `${movie.id}`, movieResultDiv)
     movieResultDiv.append(detailsDiv)
     mainResultContainer.append(movieResultDiv)
@@ -67,32 +70,36 @@ export function displayResultsMovie(fetchdata) {
 
 
 export function displayResultsPerson(fetchdata) {
-  for (const actor of fetchdata.results) {
-    const actorResultDiv = document.createElement('div')
-    const actorWorkList = document.createElement('ul')
-    actorResultDiv.classList.add('actor-card-style')
-    createAndAppendElement('img', `https://image.tmdb.org/t/p/w300${actor.profile_path}`, actorResultDiv)
-    createAndAppendElement('h1', actor.name, actorResultDiv)
-    createAndAppendElement('h2', `Department: ${actor.known_for_department}`, actorResultDiv)
-    for (const value of actor.known_for) {
+  for (const person of fetchdata.results) {
+    const personResultDiv = document.createElement('div')
+    const personWorkList = document.createElement('ul')
+    personResultDiv.classList.add('actor-card-style')
+    createAndAppendElement('img', `https://image.tmdb.org/t/p/w300${person.profile_path}`, personResultDiv)
+    if (_.isNull(person.profile_path)) {
+      personResultDiv.classList.add('extra-hidden')
+    }
+    createAndAppendElement('h1', person.name, personResultDiv)
+    createAndAppendElement('h2', `Department: ${person.known_for_department}`, personResultDiv)
+    for (const value of person.known_for) {
       if (value.media_type === 'movie') {
-        createAndAppendElement('li', `Movie: ${value.title}`, actorWorkList)
+        createAndAppendElement('li', `Movie: ${value.title}`, personWorkList)
       }
       else if (value.media_type === 'tv') {
-        createAndAppendElement('li', `TV: ${value.name}`, actorWorkList)
+        createAndAppendElement('li', `TV: ${value.name}`, personWorkList)
       }
     }
-    actorResultDiv.append(actorWorkList)
-    createAndAppendElement('button', 'Details', actorResultDiv)
-    mainResultContainer.append(actorResultDiv)
+    personResultDiv.append(personWorkList)
+    createAndAppendElement('button', `${person.id}`, personResultDiv)
+    mainResultContainer.append(personResultDiv)
   }
 }
 
-export function displayDetailsMovies(movie) {
+function displayDetailsMovies(movie) {
   const detailsDiv = document.createElement('div')
   const genreList = document.createElement('ul')
   const companiesList = document.createElement('ul')
-  detailsDiv.classList.add('movie-details')
+  detailsDiv.classList.add('movie-details-style')
+  createAndAppendElement('img', `https://image.tmdb.org/t/p/w300${movie.poster_path}`, detailsDiv)
   createAndAppendElement('h1', `${movie.title}`, detailsDiv)
   createAndAppendElement('p', `Budget: ${movie.budget}`, detailsDiv)
   createAndAppendElement('p', `Revenue: ${movie.revenue}`, detailsDiv)
@@ -109,12 +116,14 @@ export function displayDetailsMovies(movie) {
   detailsDiv.append(companiesList)
   mainResultContainer.append(detailsDiv)
 }
-export function displayDetailsPerson(person) {
+
+function displayDetailsPerson(person) {
   const detailsDiv = document.createElement('div')
-  detailsDiv.classList.add('actor-details')
+  detailsDiv.classList.add('actor-details-style')
+  createAndAppendElement('img', `https://image.tmdb.org/t/p/w300${person.profile_path}`, detailsDiv)
   createAndAppendElement('h1', `${person.name}`, detailsDiv)
-  createAndAppendElement('h2', `Bio: ${person.birthday}`, detailsDiv)
-  createAndAppendElement('p', `Bio: ${person.biography}`, detailsDiv)
+  createAndAppendElement('h2', `${person.birthday}`, detailsDiv)
+  createAndAppendElement('p', `${person.biography}`, detailsDiv)
   mainResultContainer.append(detailsDiv)
 }
 export function removePrevSearchResult() {
