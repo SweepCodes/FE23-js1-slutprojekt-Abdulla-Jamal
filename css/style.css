@@ -37,6 +37,7 @@ form {
   padding-top: 8px;
   color: whitesmoke;
 }
+
 #result-container {
   display: flex;
   flex-direction: row;

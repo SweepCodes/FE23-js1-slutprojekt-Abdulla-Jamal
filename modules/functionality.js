@@ -1,40 +1,47 @@
-const mainResultContainer = document.querySelector('#result-container');
+const mainResultContainer = document.querySelector('#result-container'); /*Declaring result container in outer scope for reuseability*/
+
+/*CreateAndAppendElement: Pretty self explanetory a function that takes 3 arguments*/
+/*Element: what element you are creating */
+/*content: whats the content of said element */
+/*container: what container you are appendthe element too*/
 export function createAndAppendElement(element, content, container) {
   const el = document.createElement(element)
   container.append(el)
 
   if (element === 'img') el.src = content
   else el.innerText = content
-
+  /*Certing objects from the api are missing images here is the fix*/
   if (el.src === 'https://image.tmdb.org/t/p/w300null') {
     el.src = 'https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg'
 
   }
-
+  /*Details Button functionality */
   if (element === 'button') {
-    const searchType = document.querySelector('input[type="radio"]:checked').value;
+    const detailsType = document.querySelector('input[type="radio"]:checked').value;
     el.innerText = 'Details'
     el.addEventListener('click', () => {
-      let id = content;
+      let id = content; /*Delaring the content of the button as id  to use as and argument for my detailsFetch function*/
       if (searchType === 'movie') {
         removePrevSearchResult();
-        DetailsFetch(searchType, id, displayDetailsMovies)
+        detailsFetch(detailsType, id, displayDetailsMovies)
       }
       else if (searchType === 'person') {
         removePrevSearchResult();
-        DetailsFetch(searchType, id, displayDetailsPerson)
+        detailsFetch(detailsType, id, displayDetailsPerson)
       }
     })
   }
   return el;
 }
 
-
-function DetailsFetch(type, id, displayFunction) {
+/*Details button fetch function */
+/*type: based on the user choice between movie or actor*/
+/*id: the id of the movie or person */
+/*displayFunction: The manner the data fetched is displayed in */
+function detailsFetch(type, id, displayFunction) {
   const apiKey = '2458552afaedac046eaf59b5f10b357d';
   const basedetailsURL = `https://api.themoviedb.org/3/${type}/${id}?language=en-US&api_key=`;
   const detailsURL = basedetailsURL + apiKey;
-
   fetch(detailsURL)
     .then(res => {
       if (res.ok) {
@@ -49,7 +56,7 @@ function DetailsFetch(type, id, displayFunction) {
     .catch(displayErrorMsg);
 }
 
-
+/*How the result of the search for movies is displayed */
 export function displayResultsMovie(fetchdata) {
   for (const movie of fetchdata.results) {
     const movieResultDiv = document.createElement('div')
@@ -62,13 +69,13 @@ export function displayResultsMovie(fetchdata) {
     if (_.isNull(movie.poster_path)) {
       movieResultDiv.classList.add('extra-hidden')
     }
-    createAndAppendElement('button', `${movie.id}`, movieResultDiv)
+    createAndAppendElement('button', `${movie.id}`, movieResultDiv) /*this is where i make the id as content for each button*/
     movieResultDiv.append(detailsDiv)
     mainResultContainer.append(movieResultDiv)
   }
 }
 
-
+/*How the result of the search for persons is displayed */
 export function displayResultsPerson(fetchdata) {
   for (const person of fetchdata.results) {
     const personResultDiv = document.createElement('div')
@@ -94,6 +101,7 @@ export function displayResultsPerson(fetchdata) {
   }
 }
 
+/*How the details for movies is displayed if the details button is pressed */
 function displayDetailsMovies(movie) {
   const detailsDiv = document.createElement('div')
   const genreList = document.createElement('ul')
@@ -116,7 +124,7 @@ function displayDetailsMovies(movie) {
   detailsDiv.append(companiesList)
   mainResultContainer.append(detailsDiv)
 }
-
+/*How the details for persons is displayed if the details button is pressed */
 function displayDetailsPerson(person) {
   const detailsDiv = document.createElement('div')
   detailsDiv.classList.add('actor-details-style')
@@ -126,6 +134,8 @@ function displayDetailsPerson(person) {
   createAndAppendElement('p', `${person.biography}`, detailsDiv)
   mainResultContainer.append(detailsDiv)
 }
+
+/*Every time i want the search results to be cleard i use this function */
 export function removePrevSearchResult() {
   const mainResultContainer = document.querySelector('#result-container');
   mainResultContainer.innerHTML = '';
@@ -134,6 +144,8 @@ export function removePrevSearchResult() {
   errorContainer.classList.add('hidden');
 }
 
+/*My error message handler for how my error are displayed-
+PS- this function is here because i wanted to pass it in my catch for the detailsFunction. it is also in the fetches.js*/
 function displayErrorMsg(error) {
   console.log(error);
   let msg;

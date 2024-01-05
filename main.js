@@ -26,7 +26,7 @@
  * https://underscorejs.org/#
  */
 
-
+/*Importing functions from modules and declaring variables for accessability*/
 import { fetchMovieDB } from "./modules/fetches.js";
 import { displayResultsMovie } from "./modules/functionality.js";
 import { displayResultsPerson } from "./modules/functionality.js";
@@ -38,6 +38,8 @@ const listEls = document.querySelectorAll('.list-el')
 
 form.addEventListener('submit', searchHandler)
 
+/*Creating the function "searchHandler" to add as a parameter for my submit event above*/
+/*Besed on the user choice and input display certin information */
 async function searchHandler(event) {
     event.preventDefault();
     removePrevSearchResult();
@@ -54,7 +56,7 @@ async function searchHandler(event) {
 
 
 
-
+/*ListEls contains 2 HTML-elements that are "top Rated" and "Popular" movies when clicked excute a fetch function and displying information*/
 listEls.forEach((element) => {
     element.addEventListener('click', () => {
         if (element.textContent === 'Top Rated') {
