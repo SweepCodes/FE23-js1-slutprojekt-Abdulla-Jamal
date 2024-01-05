@@ -12,16 +12,23 @@
  * - Release date:
  * - Overview:
  * - Movie Poster.
+ * - A Details button can be clicked to display:
+ * - Budget: 
+ * - Revenue: 
+ * - Runtime: 
+ * - What Genres the movie have:
+ * - What companies the movie is Produced by:
  * Information displayed for each Actor:
  * - Actor name:
  * - Department that they are know to be working in.
  * - a list of the top movies or TV-show they have worked on.
- * 
- * 
- * 
+ * - a Details button can be clicked to display.
+ * - Actor name 
+ * - A clickable Link to the actors imdb Page
+ * - Actors Biography.
  * - Links used as help for building this website are listed below.
+ * https://www.w3schools.com/
  * https://devdevout.com/css/css-cards
- * https://www.freepik.com/free-vector
  * https://getcssscan.com/css-buttons-examples
  * https://underscorejs.org/#
  */

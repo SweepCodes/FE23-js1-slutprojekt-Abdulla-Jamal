@@ -6,6 +6,11 @@ export function createAndAppendElement(element, content, container) {
 
   if (element === 'img') el.src = content
   else el.innerText = content
+  if (element === 'a') {
+    el.href = content
+    el.target = "_blank"
+    el.innerText = 'IMDB Page'
+  }
   /*Details Button functionality */
   if (element === 'button') {
     const detailsType = document.querySelector('input[type="radio"]:checked').value;
@@ -123,7 +128,8 @@ function displayDetailsPerson(person) {
   detailsDiv.classList.add('actor-details-style')
   createAndAppendElement('img', `https://image.tmdb.org/t/p/w300${person.profile_path}`, detailsDiv)
   createAndAppendElement('h1', `${person.name}`, detailsDiv)
-  createAndAppendElement('h2', `${person.birthday}`, detailsDiv)
+  createAndAppendElement('a', `https://www.imdb.com/name/${person.imdb_id}`, detailsDiv)
+  createAndAppendElement('h2', `Biography`, detailsDiv)
   createAndAppendElement('p', `${person.biography}`, detailsDiv)
   mainResultContainer.append(detailsDiv)
 }

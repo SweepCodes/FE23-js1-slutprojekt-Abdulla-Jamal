@@ -286,6 +286,10 @@ form {
   }
 }
 .actor-details-style {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   border: 2px solid black;
   padding: 5px;
   border-radius: 15px;
@@ -293,6 +297,16 @@ form {
   img {
     border-radius: 15px;
     width: fit-content;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.8rem;
+    font-family: "Roboto Condensed", sans-serif;
+    cursor: pointer;
+  }
+  a:hover {
+    color: aquamarine;
   }
   h1 {
     color: white;
