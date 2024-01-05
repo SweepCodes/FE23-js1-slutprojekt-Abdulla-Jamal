@@ -1,31 +1,22 @@
-const mainResultContainer = document.querySelector('#result-container'); /*Declaring result container in outer scope for reuseability*/
+const mainResultContainer = document.querySelector('#result-container');
 
-/*CreateAndAppendElement: Pretty self explanetory a function that takes 3 arguments*/
-/*Element: what element you are creating */
-/*content: whats the content of said element */
-/*container: what container you are appendthe element too*/
 export function createAndAppendElement(element, content, container) {
   const el = document.createElement(element)
   container.append(el)
 
   if (element === 'img') el.src = content
   else el.innerText = content
-  /*Certing objects from the api are missing images here is the fix*/
-  if (el.src === 'https://image.tmdb.org/t/p/w300null') {
-    el.src = 'https://img.freepik.com/free-vector/no-data-concept-illustration_114360-536.jpg'
-
-  }
   /*Details Button functionality */
   if (element === 'button') {
     const detailsType = document.querySelector('input[type="radio"]:checked').value;
     el.innerText = 'Details'
     el.addEventListener('click', () => {
-      let id = content; /*Delaring the content of the button as id  to use as and argument for my detailsFetch function*/
-      if (searchType === 'movie') {
+      let id = content; /*Delaring the content of the button as "id" to use as an argument for my detailsFetch function*/
+      if (detailsType === 'movie') {
         removePrevSearchResult();
         detailsFetch(detailsType, id, displayDetailsMovies)
       }
-      else if (searchType === 'person') {
+      else if (detailsType === 'person') {
         removePrevSearchResult();
         detailsFetch(detailsType, id, displayDetailsPerson)
       }
@@ -35,7 +26,7 @@ export function createAndAppendElement(element, content, container) {
 }
 
 /*Details button fetch function */
-/*type: based on the user choice between movie or actor*/
+/*type: based on the user choice between movie or person*/
 /*id: the id of the movie or person */
 /*displayFunction: The manner the data fetched is displayed in */
 function detailsFetch(type, id, displayFunction) {
@@ -66,10 +57,11 @@ export function displayResultsMovie(fetchdata) {
     createAndAppendElement('h2', `Release date: ${movie.release_date}`, movieResultDiv)
     createAndAppendElement('p', `Overview: ${movie.overview}`, movieResultDiv)
     createAndAppendElement('img', `https://image.tmdb.org/t/p/w300${movie.poster_path}`, movieResultDiv)
+    /*Certin objects from the api are missing images here is the fix with the help of underscore.js*/
     if (_.isNull(movie.poster_path)) {
       movieResultDiv.classList.add('extra-hidden')
     }
-    createAndAppendElement('button', `${movie.id}`, movieResultDiv) /*this is where i make the id as content for each button*/
+    createAndAppendElement('button', `${movie.id}`, movieResultDiv)/*this is where i make the id as content for each button*/
     movieResultDiv.append(detailsDiv)
     mainResultContainer.append(movieResultDiv)
   }
@@ -82,6 +74,7 @@ export function displayResultsPerson(fetchdata) {
     const personWorkList = document.createElement('ul')
     personResultDiv.classList.add('actor-card-style')
     createAndAppendElement('img', `https://image.tmdb.org/t/p/w300${person.profile_path}`, personResultDiv)
+    /*Certin objects from the api are missing images here is the fix with the help of underscore.js*/
     if (_.isNull(person.profile_path)) {
       personResultDiv.classList.add('extra-hidden')
     }
@@ -109,9 +102,9 @@ function displayDetailsMovies(movie) {
   detailsDiv.classList.add('movie-details-style')
   createAndAppendElement('img', `https://image.tmdb.org/t/p/w300${movie.poster_path}`, detailsDiv)
   createAndAppendElement('h1', `${movie.title}`, detailsDiv)
-  createAndAppendElement('p', `Budget: ${movie.budget}`, detailsDiv)
-  createAndAppendElement('p', `Revenue: ${movie.revenue}`, detailsDiv)
-  createAndAppendElement('p', `Runtime: ${movie.runtime}`, detailsDiv)
+  createAndAppendElement('p', `Budget: ${movie.budget.toLocaleString()} $`, detailsDiv)
+  createAndAppendElement('p', `Revenue: ${movie.revenue.toLocaleString()} $`, detailsDiv)
+  createAndAppendElement('p', `Runtime: ${movie.runtime} Minutes.`, detailsDiv)
   createAndAppendElement('h2', 'Genres:', detailsDiv)
   detailsDiv.append(genreList)
   for (const value of movie.genres) {

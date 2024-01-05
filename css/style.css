@@ -47,10 +47,27 @@ form {
   padding: 50px;
   font-family: "Roboto", sans-serif;
 }
+#movie-choice {
+  cursor: pointer;
+}
+#actor-choice {
+  cursor: pointer;
+}
+#search-btn {
+  cursor: pointer;
+}
+#error-container {
+  width: 30%;
+  margin: 0 auto;
+}
+#error-msg {
+  color: white;
+}
+.list-el {
+  cursor: pointer;
+}
+
 .actor-card-style {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   border-radius: 10px;
   width: 30%;
   height: fit-content;
@@ -238,6 +255,10 @@ form {
 }
 
 .movie-details-style {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  gap: 1rem;
   border: 2px solid black;
   padding: 5px;
   border-radius: 15px;
@@ -246,7 +267,21 @@ form {
     border-radius: 15px;
     width: fit-content;
   }
+  h1 {
+    color: white;
+  }
+  h2 {
+    color: white;
+  }
+  h3 {
+    color: white;
+  }
+  p {
+    color: white;
+  }
   ul {
+    color: white;
+
     list-style: none;
   }
 }
@@ -259,7 +294,20 @@ form {
     border-radius: 15px;
     width: fit-content;
   }
+  h1 {
+    color: white;
+  }
+  h2 {
+    color: white;
+  }
+  h3 {
+    color: white;
+  }
+  p {
+    color: white;
+  }
   ul {
     list-style: none;
+    color: white;
   }
 }
