@@ -64,7 +64,7 @@ async function searchHandler(event) {
 
 
 
-/*ListEls contains 2 HTML-elements that are "top Rated" and "Popular" movies when clicked excute a fetch function and displying information*/
+/*ListEls contains 2 HTML-elements that are "top Rated" and "Popular" movies when clicked excute a fetch function and display information*/
 listEls.forEach((element) => {
     element.addEventListener('click', () => {
         if (element.textContent === 'Top Rated') {
