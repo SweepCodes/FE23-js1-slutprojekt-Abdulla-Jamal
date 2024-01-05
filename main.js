@@ -6,7 +6,8 @@
  * 
  * Fetches All Movies and Actors based on user search input.
  * Fetches current Top10 list of Movies and a list of the Top10 most popular movies of all time by a simply clicking on them.
- * User can search by Movie name or actor name.  
+ * User can search by Movie name or actor name.
+ * HOVER OVER THE MOVIE PICTURES TO SEE: 
  * Information displayed for each Movie:
  * - Movie Title:
  * - Release date:
