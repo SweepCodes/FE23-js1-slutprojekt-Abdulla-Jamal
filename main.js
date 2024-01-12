@@ -41,7 +41,7 @@ import { displayErrorMsg } from "./modules/fetches.js";
 import { movieListFetch } from "./modules/fetches.js";
 import { removePrevSearchResult } from "./modules/functionality.js";
 const form = document.querySelector('form');
-const listEls = document.querySelectorAll('.list-el')
+const movieLists = document.querySelectorAll('.movies-list-el')
 
 form.addEventListener('submit', searchHandler)
 
@@ -59,16 +59,13 @@ async function searchHandler(event) {
     form.reset();
 }
 
-
-
-/*ListEls contains 2 HTML-elements that are "top Rated" and "Popular" movies when clicked excute a fetch function and displying information*/
-listEls.forEach((element) => {
-    element.addEventListener('click', () => {
-        if (element.textContent === 'Top Rated') {
+movieLists.forEach((listEl) => {
+    listEl.addEventListener('click', () => {
+        if (listEl.textContent === 'Top Rated') {
             removePrevSearchResult();
             movieListFetch("top_rated").then(displayResultsMovie).catch(displayErrorMsg)
         }
-        else if (element.textContent === 'Popular') {
+        else if (listEl.textContent === 'Popular') {
             removePrevSearchResult();
             movieListFetch("popular").then(displayResultsMovie).catch(displayErrorMsg)
         }

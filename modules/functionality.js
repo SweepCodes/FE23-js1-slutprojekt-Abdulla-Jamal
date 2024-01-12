@@ -12,7 +12,7 @@ export function createAndAppendElement(element, content, container) {
     el.target = "_blank"
     el.innerText = 'IMDB Page'
   }
-  /*Details Button functionality */
+  /*Details Button functionality*/
   if (element === 'button') {
     const detailsType = document.querySelector('input[type="radio"]:checked').value;
     el.innerText = 'Details'

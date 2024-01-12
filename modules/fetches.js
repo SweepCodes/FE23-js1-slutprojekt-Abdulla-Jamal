@@ -2,7 +2,7 @@ const apiKey = '2458552afaedac046eaf59b5f10b357d';
 
 /*main fetch function for searching movies and actors*/
 export async function fetchMovieDB(input, type) {
-    const apiBaseUrl = `https://api.themviedb.org/3/search/${type}?query=${input}&include_adult=false&language=en-US&page=1&api_key=`
+    const apiBaseUrl = `https://api.themoviedb.org/3/search/${type}?query=${input}&include_adult=false&language=en-US&page=1&api_key=`
 
     const url = apiBaseUrl + apiKey;
 
