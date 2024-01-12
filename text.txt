@@ -1,0 +1,17 @@
+    Se till att kommentarer faktiskt tillför något. Just nu är det många kommentarer som förklarar det uppenbara.
+    Tex “Creating the function ‘searchHandler’ to add as a parameter for my submit event above*”
+    Man ser att en funktion med namnet “searchHandler” har definierats, man ser att den används i en eventlister.
+    Med andra ord, kommentaren förklarar ingenting utöver det som koden redan visar. 
+
+Se: https://stackoverflow.blog/2021/12/23/best-practices-for-writing-code-comments/  (se även katt-memen längst)
+och https://docs.google.com/document/d/1wZdWJzehT9fCEtInVZt8v9SRHQ6RwBCwbtZsNvDZkW0/edit 
+
+    Det finns en funktion som heter detailsFetch som ligger i modulen functionality.
+    Det vore mer logiskt om den låg i modulen fetches.js. Flytta över den så att den är enklare att hitta.
+    API-nyckeln finns på tre olika stället, om den behöver uppdateras behöver man nu leta upp alla tre ställen för att ändra på den.
+    Se istället till att den endast finns på ett ställe och att det är lätt att förstå var det stället är. 
+    displayError finns på två ställen, om den behöver uppdateras är det inte helt tydligt var man ska kolla.
+    Jag såg att det fanns en kommentar kring det men det borde inte vara något problem att organisera koden på ett sätt så att det inte behövs.
+    Så se till att funktioner som är identiska endast 
+
+Hör av dig om du undrar något!
