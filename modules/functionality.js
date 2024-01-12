@@ -1,4 +1,5 @@
 const mainResultContainer = document.querySelector('#result-container');
+import { detailsFetch } from "./fetches.js";
 
 export function createAndAppendElement(element, content, container) {
   const el = document.createElement(element)
@@ -30,29 +31,6 @@ export function createAndAppendElement(element, content, container) {
   return el;
 }
 
-/*Details button fetch function */
-/*type: based on the user choice between movie or person*/
-/*id: the id of the movie or person */
-/*displayFunction: The manner the data fetched is displayed in */
-function detailsFetch(type, id, displayFunction) {
-  const apiKey = '2458552afaedac046eaf59b5f10b357d';
-  const basedetailsURL = `https://api.themoviedb.org/3/${type}/${id}?language=en-US&api_key=`;
-  const detailsURL = basedetailsURL + apiKey;
-  fetch(detailsURL)
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        throw 'error';
-      }
-    })
-    .then(data => {
-      displayFunction(data);
-    })
-    .catch(displayErrorMsg);
-}
-
-/*How the result of the search for movies is displayed */
 export function displayResultsMovie(fetchdata) {
   for (const movie of fetchdata.results) {
     const movieResultDiv = document.createElement('div')
@@ -72,7 +50,6 @@ export function displayResultsMovie(fetchdata) {
   }
 }
 
-/*How the result of the search for persons is displayed */
 export function displayResultsPerson(fetchdata) {
   for (const person of fetchdata.results) {
     const personResultDiv = document.createElement('div')
@@ -99,7 +76,6 @@ export function displayResultsPerson(fetchdata) {
   }
 }
 
-/*How the details for movies is displayed if the details button is pressed */
 function displayDetailsMovies(movie) {
   const detailsDiv = document.createElement('div')
   const genreList = document.createElement('ul')
@@ -122,7 +98,6 @@ function displayDetailsMovies(movie) {
   detailsDiv.append(companiesList)
   mainResultContainer.append(detailsDiv)
 }
-/*How the details for persons is displayed if the details button is pressed */
 function displayDetailsPerson(person) {
   const detailsDiv = document.createElement('div')
   detailsDiv.classList.add('actor-details-style')
@@ -142,20 +117,3 @@ export function removePrevSearchResult() {
   const errorContainer = document.querySelector('#error-container');
   errorContainer.classList.add('hidden');
 }
-
-/*My error message handler for how my error are displayed-
-PS- this function is here because i wanted to pass it in my catch for the detailsFunction. it is also in the fetches.js*/
-function displayErrorMsg(error) {
-  console.log(error);
-  let msg;
-  if (error === 'input error') msg = 'no results'
-  else msg = 'something went wrong... please try again later'
-
-  const errorMsgEl = document.querySelector('#error-msg')
-  errorMsgEl.innerText = msg;
-
-  const errorContainer = document.querySelector('#error-container')
-  errorContainer.classList.remove('hidden')
-}
-
-

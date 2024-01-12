@@ -1,7 +1,8 @@
-/*The Main Fetch function used to get information from the Movie DataBase */
+const apiKey = '2458552afaedac046eaf59b5f10b357d';
+
+/*main fetch function for searching movies and actors*/
 export async function fetchMovieDB(input, type) {
-    const apiKey = '2458552afaedac046eaf59b5f10b357d';
-    const apiBaseUrl = `https://api.themoviedb.org/3/search/${type}?query=${input}&include_adult=false&language=en-US&page=1&api_key=`
+    const apiBaseUrl = `https://api.themviedb.org/3/search/${type}?query=${input}&include_adult=false&language=en-US&page=1&api_key=`
 
     const url = apiBaseUrl + apiKey;
 
@@ -16,9 +17,8 @@ export async function fetchMovieDB(input, type) {
     }
     else throw 'error';
 };
-/*Movie list fetch function based on the list argument (the argument gets its value when i call in the function in Main.js) */
+/*Fetch function for movie lists 'Top rated' and 'Popular' movies*/
 export async function movieListFetch(list) {
-    const apiKey = '2458552afaedac046eaf59b5f10b357d';
     const baseListUrl = `https://api.themoviedb.org/3/movie/${list}?language=en-US&api_key=`
     const fullUrl = baseListUrl + apiKey;
     const response = await fetch(fullUrl)
@@ -29,8 +29,25 @@ export async function movieListFetch(list) {
     }
     else throw 'error';
 }
+/*Details functionality fetch function*/
+export function detailsFetch(type, id, displayFunction) {
+    const basedetailsURL = `https://api.themoviedb.org/3/${type}/${id}?language=en-US&api_key=`;
+    const detailsURL = basedetailsURL + apiKey;
+    fetch(detailsURL)
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw 'error';
+            }
+        })
+        .then(data => {
+            displayFunction(data);
+        })
+        .catch(displayErrorMsg);
+}
 
-/*Error meassge handler ps- its also in the functionality.js */
+/*Error meassge handler*/
 export function displayErrorMsg(error) {
     console.log(error);
     let msg;
